@@ -1,0 +1,66 @@
+/* Header dimensions and breakpoints restored from the migration backup. */
+header.login-header.arena-login-header {
+  position: sticky; top: 0; z-index: 50; display: block; padding: 0;
+  min-height: 84px; border-bottom: 1px solid rgba(48,108,163,.16);
+  background: rgba(247,251,255,.95); backdrop-filter: blur(18px);
+  box-shadow: 0 10px 32px rgba(29,73,112,.07);
+}
+:root[data-theme=dark] header.login-header.arena-login-header {
+  border-color: rgba(120,188,238,.18); background: rgba(5,20,38,.96); box-shadow: none;
+}
+.arena-header-inner {
+  width: min(1320px,calc(100% - 56px)); min-height: 84px; margin: 0 auto;
+  display: grid; grid-template-columns: minmax(300px,1fr) auto minmax(300px,1fr);
+  align-items: center; gap: 24px;
+}
+.arena-header-inner .arena-login-brand { width: 320px; min-width: 320px; justify-self: start; }
+.arena-header-inner .brand { width: 100%; max-width: none; height: 76px; gap: 0; }
+.arena-header-inner .brand > img { width: 74px; flex: 0 0 74px; height: 100%; object-fit: contain; filter: drop-shadow(0 10px 20px rgba(29,148,255,.16)); }
+.arena-header-inner .brand > .wordmark {
+  width: 0; flex: 1 1 auto; min-width: 0; height: 100%; object-position: center;
+  transform: translateX(-12px) scale(1.12); transform-origin: left center;
+}
+.arena-header-inner .arena-login-title { display: flex; gap: 18px; color: #16365f; }
+.arena-header-inner .arena-login-title i { width: 46px; }
+:root[data-theme=dark] .arena-header-inner .arena-login-title { color: #f3f8ff; }
+.arena-header-inner .arena-login-actions { display: flex; gap: 12px; grid-column: 3; }
+.arena-header-inner .arena-login-actions > a { display: inline-flex; align-items: center; gap: 8px; color: #496580; white-space: nowrap; }
+.arena-header-inner .arena-login-actions > a span { font-size: 18px; line-height: 1; }
+.arena-header-inner .arena-login-actions > a:hover { color: #64ceff; }
+:root[data-theme=dark] .arena-header-inner .arena-login-actions > a { color: rgba(235,246,255,.86); }
+.arena-theme-toggle {
+  width: 58px; height: 44px; padding: 4px; display: flex; align-items: center; justify-content: flex-start;
+  border: 1px solid rgba(50,108,163,.18); border-radius: 999px;
+  background: rgba(232,243,252,.78); color: #183d67; font-weight: 800;
+  box-shadow: 0 12px 34px rgba(41,124,211,.08);
+}
+.arena-theme-toggle span {
+  width: 30px; height: 30px; border-radius: 999px; display: grid; place-items: center;
+  background: #f5b83d; color: #fff9dd; font-size: 17px; line-height: 1;
+  transition: transform .25s ease,background .25s ease,color .25s ease;
+  box-shadow: 0 5px 16px rgba(0,0,0,.18),inset 0 0 0 1px rgba(255,255,255,.28);
+}
+:root[data-theme=dark] .arena-theme-toggle { border-color: rgba(140,197,239,.2); background: rgba(11,31,54,.88); color: #eef7ff; }
+:root[data-theme=dark] .arena-theme-toggle span { transform: translateX(18px); background: #218fdf; color: #e7f6ff; }
+@media(min-width:1181px) and (max-width:1380px) {
+  .arena-header-inner .arena-login-brand { width: 264px; min-width: 264px; }
+  .arena-header-inner .brand { height: 66px; }
+  .arena-header-inner .brand > img:not(.wordmark) { width: 64px; flex-basis: 64px; }
+}
+@media(max-width:1180px) {
+  header.login-header.arena-login-header { min-height: 74px; z-index: 1000; }
+  .arena-header-inner { width: min(100% - 24px,1320px); padding: 10px 0; grid-template-columns: minmax(230px,280px) auto 1fr; }
+  .arena-header-inner .arena-login-brand { width: 280px; min-width: 280px; }
+  .arena-header-inner .brand { height: 64px; }
+  .arena-header-inner .brand > img:not(.wordmark) { width: 62px; flex-basis: 62px; }
+  .arena-header-inner .arena-login-title i { width: 28px; }
+  .arena-header-inner .arena-login-actions > a { display: none; }
+}
+@media(max-width:680px) {
+  .arena-header-inner { grid-template-columns: minmax(160px,1fr) auto; }
+  .arena-header-inner .arena-login-brand { width: 165px; min-width: 0; max-width: 165px; }
+  .arena-header-inner .brand { height: 54px; }
+  .arena-header-inner .brand > img:not(.wordmark) { width: 44px; flex-basis: 44px; }
+  .arena-header-inner .arena-login-title { display: none; }
+  .arena-header-inner .arena-login-actions { grid-column: 2; }
+}
