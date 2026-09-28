@@ -1,37 +1,26 @@
 import {useEffect,useState} from 'react';
-import {Home,Gamepad2,BarChart3,Trophy,BookOpen,LogOut,Sun,Moon,GraduationCap,School,Users,FileText,Clock,Flame,Zap,Lock,Menu,X,Medal,Calendar,Sparkles,Camera} from 'lucide-react';
+import {Home,Gamepad2,BarChart3,Trophy,BookOpen,UserRound,LogOut,Sun,Moon,GraduationCap,School,Users,FileText,Clock,Flame,Zap,Lock,Menu,X,Medal,Calendar} from 'lucide-react';
 import Login from './Login';
 import PhotoEditor,{Avatar} from './Photo';
 import {clearPreview,restorePreview,loginConfigured,parseStudent,request,type Student} from './auth';
 
-type Page='Overview'|'Play Games'|'My Stats'|'Leaderboard'|'Learning';
-const nav=[['Overview',Home],['Play Games',Gamepad2],['My Stats',BarChart3],['Leaderboard',Trophy],['Learning',BookOpen]] as const;
+type Page='Overview'|'Play Games'|'My Stats'|'Leaderboard'|'Learning'|'My Profile';
+const nav=[['Overview',Home],['Play Games',Gamepad2],['My Stats',BarChart3],['Leaderboard',Trophy],['Learning',BookOpen],['My Profile',UserRound]] as const;
+
+const mockPlayers=[
+ {name:'Kaung Khant',level:'18',time:'12m',streak:'15',color:'#2563eb'},
+ {name:'Hsu Myat Noe',level:'17',time:'14m',streak:'12',color:'#7c3aed'},
+ {name:'Aung Thura',level:'16',time:'15m',streak:'10',color:'#059669'},
+ {name:'May Phoo Han',level:'15',time:'18m',streak:'9',color:'#d97706'},
+ {name:'Min Khant Kyaw',level:'14',time:'20m',streak:'8',color:'#dc2626'},
+ {name:'Thet Htar San',level:'13',time:'22m',streak:'7',color:'#0891b2'},
+ {name:'Kyaw Swar Win',level:'12',time:'25m',streak:'5',color:'#4b5563'},
+];
 
 function Soon(){return <span className="soon"><Lock size={11}/> Coming soon</span>}
 
 function Brand({dark=false}:{dark?:boolean}){
  return <div className="brand"><img src={'/assets/mga-logo-mark'+(dark?'-dark':'')+'.png'} alt=""/><img className="wordmark" src={'/assets/mga-wordmark-slogan'+(dark?'-dark':'')+'.png'} alt="Maths Genius Academy — Think Smart, Solve Fast, Be a Genius"/></div>;
-}
-
-function DailyQuest(){
- return <section className="panel daily-quest-panel">
-  <div className="daily-quest-card">
-   <div className="daily-quest-info">
-    <div className="daily-quest-tag"><Sparkles size={14}/><span>Daily Quest / Hero Challenge</span></div>
-    <h3>Mental Math Master</h3>
-    <p>Sharpen your focus & speed · Solve 10 quick problems in 5 minutes!</p>
-    <div className="daily-quest-rewards">
-     <span>Reward:</span>
-     <span className="reward-chip xp"><Zap size={13}/> 50 XP</span>
-     <span className="reward-chip coin">🪙 15 Coins</span>
-    </div>
-    <button type="button" className="quest-start-btn">Start Challenge →</button>
-   </div>
-   <div className="daily-quest-art">
-    <img src="/assets/daily-math-quest.jpg" alt="Daily Math Quest 3D Art" />
-   </div>
-  </div>
- </section>;
 }
 
 function Academic({student:s}:{student:Student}){
@@ -43,7 +32,7 @@ function Stats(){
 }
 
 function Games(){
- return <section className="panel"><div className="section-title"><h2><Gamepad2/> Play on Web</h2><span>Fun games. Sharper minds.</span></div><div className="game-grid"><article className="game flash"><div><div className="game-badge">⚡ Mental Speed</div><h3>Flash Game</h3><p>Sharpen your mental maths with fast-paced numbers.<br/>Play in your browser.</p><Soon/></div><img className="game-3d-img" src="/assets/flash-math-icon.jpg" alt="Flash Math" /></article><article className="game abacus"><div><div className="game-badge">🧮 Focus Master</div><h3>Abacus Game</h3><p>Build focus and number sense with interactive beads.<br/>Play in your browser.</p><Soon/></div><img className="game-3d-img" src="/assets/abacus-3d-icon.jpg" alt="Abacus Challenge" /></article></div></section>;
+ return <section className="panel"><div className="section-title"><h2><Gamepad2/> Play on Web</h2><span>Fun games. Sharper minds.</span></div><div className="game-grid"><article className="game flash"><div><h3>Flash Game</h3><p>Sharpen your mental maths.<br/>Play in your browser.</p><Soon/></div><Zap className="game-art" aria-hidden="true"/></article><article className="game abacus"><div><h3>Abacus Game</h3><p>Build focus and number sense.<br/>Play in your browser.</p><Soon/></div><div className="abacus-art" aria-hidden="true">{[0,1,2,3].map(i=><div key={i}>{[0,1,2].map(j=><i key={j}/>)}</div>)}</div></article></div></section>;
 }
 
 function Learning(){
@@ -51,11 +40,67 @@ function Learning(){
 }
 
 function Leaderboard({student:s}:{student:Student}){
- return <section className="panel leaderboard"><header><div><h2><Trophy/> Leaderboard</h2><p>Integration coming soon</p></div><span className="top100">TOP 100</span></header><div className="leader-content"><div className="segmented" aria-label="Game filter preview"><button disabled><Zap size={15}/> Flash</button><button disabled><Gamepad2 size={15}/> Abacus</button></div><div className="segmented"><button disabled>Weekly</button><button disabled>All time</button></div><div className="ranking-scroll" tabIndex={0} role="region" aria-label="Leaderboard preview"><table><thead><tr>{['#','Player','Level','Time','Streak'].map(x=><th key={x}>{x}</th>)}</tr></thead><tbody>{Array.from({length:7},(_,i)=><tr key={i} className={'place-'+(i+1)}><td>{i<3?<span className="medal"><Medal size={22}/><b>{i+1}</b></span>:i+1}</td><td><span className="player"><Avatar student={s}/> Player {String(i+1).padStart(2,'0')}</span></td><td>—</td><td>—</td><td>—</td></tr>)}</tbody></table></div><div className="your-position"><small>YOUR POSITION</small><div><Avatar student={s}/><span><b>{s.nickname||s.name}</b><strong>Unranked</strong><small>Earn your place when games launch.</small></span></div></div><button className="top-button" disabled><Lock size={16}/> View Top 100 · Coming soon</button><p className="footnote muted">Preview only · No live rankings yet</p></div></section>;
+ return <section className="panel leaderboard">
+  <header>
+   <div><h2><Trophy/> Leaderboard</h2><p>Integration coming soon</p></div>
+   <span className="top100">TOP 100</span>
+  </header>
+  <div className="leader-content">
+   <div className="segmented" aria-label="Game filter preview"><button disabled><Zap size={15}/> Flash</button><button disabled><Gamepad2 size={15}/> Abacus</button></div>
+   <div className="segmented"><button disabled>Weekly</button><button disabled>All time</button></div>
+   <div className="ranking-scroll" tabIndex={0} role="region" aria-label="Leaderboard preview">
+    <table>
+     <thead>
+      <tr>{['#','Player','Level','Time','Streak'].map(x=><th key={x}>{x}</th>)}</tr>
+     </thead>
+     <tbody>
+      {mockPlayers.map((p,i)=><tr key={p.name} className={'place-'+(i+1)}>
+       <td>{i<3?<span className="medal"><Medal size={22}/><b>{i+1}</b></span>:i+1}</td>
+       <td>
+        <span className="player">
+         <span className="leader-avatar" style={{backgroundColor:p.color}}>{p.name.charAt(0)}</span>
+         <span>{p.name}</span>
+        </span>
+       </td>
+       <td>{p.level}</td>
+       <td>{p.time}</td>
+       <td>{p.streak}</td>
+      </tr>)}
+     </tbody>
+    </table>
+   </div>
+   <div className="your-position">
+    <small>YOUR POSITION</small>
+    <div>
+     <Avatar student={s}/>
+     <span><b>{s.nickname||s.name}</b><strong>Unranked</strong><small>Earn your place when games launch.</small></span>
+    </div>
+   </div>
+   <button className="top-button" disabled><Lock size={16}/> View Top 100 · Coming soon</button>
+   <p className="footnote muted">Preview only · No live rankings yet</p>
+  </div>
+ </section>;
+}
+
+function Profile({student:s,onChange}:{student:Student;onChange:(s:Student)=>void}){
+ return <section className="panel profile">
+  <h2>My Profile</h2>
+  <PhotoEditor student={s} onChange={onChange}/>
+  <div className="profile-grid">
+   <section>
+    <h3>Student information</h3>
+    <dl>{[['Full name',s.name],['Nickname',s.nickname||'Not provided'],['Student ID',s.studentId],['Date of birth',s.dob],['School',s.school],['Class',s.level],['Enrolled',s.enrolled]].map(([label,value])=><div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
+   </section>
+   <section>
+    <h3>Academic Journey</h3>
+    <dl>{[['Credits',s.credits],['Attendance',s.attendance+'%'],['Participation',s.participation+'/5'],['Assignments',s.assignments+'%']].map(([label,value])=><div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
+   </section>
+  </div>
+ </section>;
 }
 
 export default function App(){
- const [theme,setTheme]=useState<'light'|'dark'>(()=>{try{return localStorage.getItem('mga_arena_theme')==='dark'?'dark':'light'}catch{return 'light'}}),[student,setStudent]=useState<Student|null>(restorePreview),[page,setPage]=useState<Page>('Overview'),[menu,setMenu]=useState(false),[loading,setLoading]=useState(loginConfigured),[error,setError]=useState(''),[photoModal,setPhotoModal]=useState(false);
+ const [theme,setTheme]=useState<'light'|'dark'>(()=>{try{return localStorage.getItem('mga_arena_theme')==='dark'?'dark':'light'}catch{return 'light'}}),[student,setStudent]=useState<Student|null>(restorePreview),[page,setPage]=useState<Page>('Overview'),[menu,setMenu]=useState(false),[loading,setLoading]=useState(loginConfigured),[error,setError]=useState('');
  const mainSiteUrl=import.meta.env.VITE_MGA_WEBSITE_URL||(import.meta.env.DEV?'http://127.0.0.1:3001/#top':'https://'+window.location.hostname.replace(/^arena\./,''));
 
  useEffect(()=>{document.documentElement.dataset.theme=theme;try{localStorage.setItem('mga_arena_theme',theme)}catch{/* Theme still works without storage. */}},[theme]);
@@ -74,12 +119,15 @@ export default function App(){
   <aside className={'sidebar '+(menu?'open':'')}>
    <div className="sidebar-brand">
     <Brand dark/>
-    <span className="sidebar-arena-title">STUDENT ARENA</span>
     <button className="mobile-close" aria-label="Close navigation" onClick={()=>setMenu(false)}><X/></button>
    </div>
    
+   <div className="ambient-light-bar sidebar-divider" aria-hidden="true"/>
+
+   <div className="sidebar-arena-title">STUDENT ARENA</div>
+
    <nav aria-label="Student Arena">
-    {nav.map(([label,Icon])=><button key={label} aria-current={page===label?'page':undefined} className={page===label?'selected':''} onClick={()=>{setPage(label);setMenu(false);window.scrollTo(0,0)}}><Icon size={20}/><span>{label}</span>{label!=='Overview'&&<small>Soon</small>}</button>)}
+    {nav.map(([label,Icon])=><button key={label} aria-current={page===label?'page':undefined} className={page===label?'selected':''} onClick={()=>{setPage(label);setMenu(false);window.scrollTo(0,0)}}><Icon size={20}/><span>{label}</span>{label!=='Overview'&&label!=='My Profile'&&<small>Soon</small>}</button>)}
    </nav>
 
    {/* Sidebar Bottom: Animated Dark Mode Switch & Sign Out */}
@@ -103,9 +151,8 @@ export default function App(){
     <button className="mobile-menu" aria-label="Open navigation" aria-expanded={menu} onClick={()=>setMenu(v=>!v)}><Menu/></button>
     
     <div className="header-student-profile">
-     <button className="header-avatar-btn" title="Click to update photo" onClick={()=>setPhotoModal(true)} aria-label="Change profile photo">
+     <button className="header-avatar-btn" title="View Profile / Change Photo" onClick={()=>{setPage('My Profile');window.scrollTo(0,0);}} aria-label="View Profile">
       <Avatar student={student}/>
-      <span className="avatar-edit-badge"><Camera size={11}/></span>
      </button>
      <div className="header-student-info">
       <div className="header-name-row">
@@ -120,29 +167,14 @@ export default function App(){
      </div>
     </div>
 
-    <div className="header-right-block">
-     <div className="header-streak-badge" title="Daily Activity Streak">
-      <Flame size={17} className="flame-icon"/>
-      <span><b>7</b> Days Streak</span>
-     </div>
-     <div className="header-welcome-text">
-      <b>Welcome back, {student.nickname||student.name.split(' ')[0]}!</b>
-      <p>Keep learning, keep growing.</p>
-     </div>
+    <div className="header-welcome-text">
+     <b>Welcome back, {student.nickname||student.name.split(' ')[0]}!</b>
+     <p>Keep learning, keep growing.</p>
     </div>
    </header>
 
    {/* Ambient Light Bar Divider */}
    <div className="ambient-light-bar" aria-hidden="true"/>
-
-   {/* Student Arena Sub-Bar below Divider */}
-   <div className="arena-subbar">
-    <div className="arena-subbar-main">
-     <span className="arena-subbar-kicker">STUDENT ARENA</span>
-     <h1 className="arena-subbar-heading">{page==='Overview'?'My Arena':page}</h1>
-    </div>
-    <p className="arena-subbar-slogan">Think Smart, Solve Fast, Be a Genius</p>
-   </div>
 
    {/* Main Content Area */}
    <main id="arena-main" className="main-content">
@@ -151,7 +183,6 @@ export default function App(){
     {page==='Overview'?(
      <div className="overview-grid">
       <div className="content-stack">
-       <DailyQuest/>
        <Academic student={student}/>
        <Stats/>
        <Games/>
@@ -159,6 +190,8 @@ export default function App(){
       </div>
       <Leaderboard student={student}/>
      </div>
+    ):page==='My Profile'?(
+     <Profile student={student} onChange={setStudent}/>
     ):page==='Leaderboard'?(
      <div className="leader-page"><Leaderboard student={student}/></div>
     ):page==='Play Games'?(
@@ -174,20 +207,5 @@ export default function App(){
     </footer>
    </main>
   </div>
-
-  {/* Profile Photo Update Modal */}
-  {photoModal&&(
-   <div className="photo-modal-backdrop" onClick={()=>setPhotoModal(false)}>
-    <div className="photo-modal-dialog" onClick={e=>e.stopPropagation()}>
-     <div className="photo-modal-header">
-      <h3>Update Profile Photo</h3>
-      <button className="photo-modal-close" onClick={()=>setPhotoModal(false)} aria-label="Close dialog"><X size={18}/></button>
-     </div>
-     <div className="photo-modal-body">
-      <PhotoEditor student={student} onChange={s=>{setStudent(s);setPhotoModal(false);}}/>
-     </div>
-    </div>
-   </div>
-  )}
  </div>;
 }

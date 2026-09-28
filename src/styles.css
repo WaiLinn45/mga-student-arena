@@ -8,9 +8,10 @@
 
 /* App Shell & Sidebar */
 .app-shell{display:grid;grid-template-columns:230px minmax(0,1fr);min-height:100svh}
-.sidebar{position:sticky;top:0;height:100svh;display:flex;flex-direction:column;background:linear-gradient(165deg,#13335b,#0a1b33);color:#e9f3ff;padding:22px 14px 18px;border-right:1px solid rgba(255,255,255,0.06);z-index:20}
-.sidebar-brand{padding:4px 4px 18px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:18px}
-.sidebar-arena-title{display:block;font-size:12px;font-weight:800;letter-spacing:2.8px;margin-top:14px;color:#7ec1ff;text-transform:uppercase}
+.sidebar{position:sticky;top:0;height:100svh;display:flex;flex-direction:column;background:linear-gradient(165deg,#13335b,#0a1b33);color:#e9f3ff;padding:0 14px 18px;border-right:1px solid rgba(255,255,255,0.06);z-index:20}
+.sidebar-brand{height:84px;min-height:84px;max-height:84px;display:flex;align-items:center;justify-content:center;padding:0;position:relative;box-sizing:border-box}
+.sidebar-divider{height:3px;margin:0 -14px;width:calc(100% + 28px);background:linear-gradient(90deg,#00d2ff 0%,#1266dd 100%);box-shadow:0 0 14px var(--glow), 0 0 4px #00d2ff88;position:relative;z-index:9}
+.sidebar-arena-title{font-size:14px;font-weight:400;letter-spacing:2.2px;color:#9ec7fc;text-transform:uppercase;padding:16px 6px 12px;text-align:center}
 .sidebar nav{display:grid;gap:8px}
 .sidebar nav button{display:flex;align-items:center;gap:12px;background:transparent;border:0;text-align:left;padding:13px 14px;color:#c8daf3;font-size:13px;font-weight:600;border-radius:10px;transition:all .18s ease}
 .sidebar nav .selected{background:#1260de;color:#fff;box-shadow:0 6px 22px rgba(18,96,222,0.42)}
@@ -34,11 +35,10 @@
 
 /* Workspace & Topbar Header */
 .workspace{min-width:0;display:flex;flex-direction:column}
-.topbar{min-height:86px;display:flex;align-items:center;gap:20px;justify-content:space-between;background:var(--surface);padding:14px 28px;position:relative;z-index:10}
+.topbar{height:84px;min-height:84px;max-height:84px;display:flex;align-items:center;gap:20px;justify-content:space-between;background:var(--surface);padding:0 28px;position:relative;z-index:10;box-sizing:border-box}
 .header-student-profile{display:flex;align-items:center;gap:15px;min-width:0}
 .header-avatar-btn{position:relative;padding:0;border:0;background:transparent;border-radius:50%;cursor:pointer;flex-shrink:0;transition:transform .18s ease}
 .header-avatar-btn:hover{transform:scale(1.05)}
-.avatar-edit-badge{position:absolute;right:-3px;bottom:-3px;background:var(--blue);color:#fff;border-radius:50%;width:20px;height:20px;display:grid;place-items:center;border:2px solid var(--surface);box-shadow:0 2px 6px rgba(0,0,0,0.2)}
 .header-student-info{min-width:0}
 .header-name-row{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
 .header-student-name{font-size:17px;font-weight:750;color:var(--text);letter-spacing:-.2px}
@@ -48,27 +48,15 @@
 .meta-tag{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--muted)}
 .meta-tag svg{color:var(--accent)}
 
-.header-right-block{display:flex;align-items:center;gap:20px;flex-shrink:0}
-.header-streak-badge{display:flex;align-items:center;gap:7px;background:linear-gradient(135deg,#fff4e0,#ffe4b5);border:1px solid #ffcc80;color:#c96300;padding:7px 14px;border-radius:20px;font-size:12px}
-:root[data-theme=dark] .header-streak-badge{background:linear-gradient(135deg,#382205,#4d2f09);border-color:#804f14;color:#ffba66}
-.flame-icon{color:#ff7a00;animation:flamePulse 1.8s infinite ease-in-out}
-@keyframes flamePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.22)}}
-.header-welcome-text{text-align:right}
+.header-welcome-text{text-align:right;flex-shrink:0}
 .header-welcome-text b{font-size:15px;color:var(--accent);display:block}
 .header-welcome-text p{font-size:11px;color:var(--muted);margin-top:2px}
 
 /* Ambient Light Bar Divider */
-.ambient-light-bar{height:3px;width:100%;background:linear-gradient(90deg,transparent 0%,#00d2ff 25%,#1266dd 50%,#9b51e0 75%,transparent 100%);box-shadow:0 0 14px var(--glow), 0 0 4px #00d2ff88;position:relative;z-index:9}
-
-/* Student Arena Sub-Bar below Divider */
-.arena-subbar{display:flex;align-items:center;justify-content:space-between;padding:16px 28px 10px;background:linear-gradient(180deg,var(--soft),transparent);border-bottom:1px solid var(--border)}
-.arena-subbar-main{display:flex;align-items:baseline;gap:14px}
-.arena-subbar-kicker{font-size:13px;font-weight:900;letter-spacing:2px;color:var(--accent);background:var(--soft);padding:4px 10px;border-radius:6px;border:1px solid var(--border);text-transform:uppercase}
-.arena-subbar-heading{font-size:24px;font-weight:800;color:var(--text);letter-spacing:-.4px}
-.arena-subbar-slogan{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.3px}
+.ambient-light-bar{height:3px;width:100%;background:linear-gradient(90deg,#1266dd 0%,#9b51e0 60%,#00d2ff 100%);box-shadow:0 0 14px var(--glow), 0 0 4px #00d2ff88;position:relative;z-index:9}
 
 /* Main Content & Grid */
-.main-content{max-width:1580px;width:100%;margin:0 auto;padding:22px 28px}
+.main-content{max-width:1580px;width:100%;margin:0 auto;padding:24px 28px}
 .overview-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(330px,.55fr);align-items:start;gap:20px}
 .content-stack{display:grid;gap:20px;min-width:0}
 .panel{min-width:0;padding:22px;border:1px solid var(--border);border-radius:16px;background:var(--surface);box-shadow:var(--shadow)}
@@ -76,21 +64,6 @@
 .section-title h2{display:flex;align-items:center;gap:10px}
 .section-title h2>svg{color:var(--accent);width:23px}
 .section-title>span:not(.soon){font-size:12px;color:var(--muted)}
-
-/* Daily Quest / Hero Challenge Card */
-.daily-quest-panel{padding:0;overflow:hidden;border:1px solid var(--border);background:linear-gradient(135deg,#00a8e8 0%,#0077b6 60%,#023e8a 100%);color:#fff;box-shadow:0 8px 26px rgba(0,119,182,0.22)}
-.daily-quest-card{display:grid;grid-template-columns:minmax(0,1fr) 180px;align-items:center;padding:22px 26px;position:relative}
-.daily-quest-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.2);backdrop-filter:blur(6px);padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#fff;margin-bottom:8px}
-.daily-quest-info h3{font-size:22px;font-weight:800;color:#fff;margin-bottom:4px}
-.daily-quest-info p{font-size:13px;color:rgba(255,255,255,0.9);max-width:440px}
-.daily-quest-rewards{display:flex;align-items:center;gap:10px;margin:14px 0 16px;font-size:12px;font-weight:700}
-.reward-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:14px;font-size:12px;font-weight:700}
-.reward-chip.xp{background:#ffd166;color:#3d2c00}
-.reward-chip.coin{background:rgba(255,255,255,0.25);color:#fff}
-.quest-start-btn{background:#fff;color:#0077b6;border:0;font-size:13px;font-weight:800;padding:10px 20px;border-radius:24px;box-shadow:0 4px 14px rgba(0,0,0,0.18);transition:all .18s ease}
-.quest-start-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.25);background:#f0f8ff}
-.daily-quest-art{display:grid;place-items:center}
-.daily-quest-art img{width:150px;height:150px;object-fit:cover;border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,0.25)}
 
 /* Stats */
 .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
@@ -102,14 +75,16 @@
 .muted{color:var(--muted)}
 .footnote{font-size:11px;margin-top:14px;line-height:1.5}
 
-/* Game Cards with 3D Assets */
+/* Game Cards */
 .game-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.game{position:relative;min-height:175px;border-radius:14px;padding:22px 20px;overflow:hidden;border:1px solid var(--border);background:linear-gradient(120deg,var(--soft),var(--surface));display:flex;justify-content:space-between;align-items:center}
-.game>div:first-child{position:relative;z-index:1;max-width:240px}
-.game-badge{display:inline-block;font-size:10px;font-weight:800;text-transform:uppercase;color:var(--accent);background:var(--soft);padding:3px 8px;border-radius:10px;border:1px solid var(--border);margin-bottom:8px}
-.game p{font-size:12px;color:var(--muted);margin:6px 0 16px}
-.game h3{font-size:19px;font-weight:800}
-.game-3d-img{width:110px;height:110px;object-fit:cover;border-radius:16px;box-shadow:0 6px 18px rgba(0,0,0,0.12);flex-shrink:0}
+.game{position:relative;min-height:185px;border-radius:14px;padding:23px 18px;overflow:hidden;border:1px solid var(--border);background:linear-gradient(120deg,var(--soft),var(--surface))}
+.game>div:first-child{position:relative;z-index:1}
+.game p{font-size:12px;color:var(--muted);margin:8px 0 22px;max-width:200px}
+.game h3{font-size:19px;font-weight:750}
+.game-art{position:absolute;width:100px;height:100px;right:5px;bottom:10px;fill:#ffd45d;color:#e8ae25;opacity:.22;transform:rotate(8deg)}
+.abacus-art{position:absolute;right:10px;bottom:15px;display:flex;gap:7px;padding:8px;border:6px solid #bc8c49;border-radius:8px;transform:rotate(-8deg);opacity:.25}
+.abacus-art>div{display:grid;gap:5px;border-left:2px solid #bc8c49}
+.abacus-art i{width:13px;height:11px;background:#2575d1;border-radius:50%;margin-left:-7px}
 
 /* Learning Grid */
 .learning-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
@@ -135,7 +110,7 @@ td{padding:12px 5px;border-bottom:1px solid var(--border);white-space:nowrap}
 td:first-child{text-align:center;width:30px}
 td:nth-child(n+3){text-align:center}
 .player{display:flex;align-items:center;gap:8px}
-.player .avatar{width:26px;height:26px}
+.leader-avatar{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:11px;font-weight:700;flex-shrink:0}
 tr.place-1{background:#eabd3622}tr.place-2{background:#7290b522}tr.place-3{background:#c68e6422}
 tr td:first-child{border-radius:8px 0 0 8px}tr td:last-child{border-radius:0 8px 8px 0}
 .medal{display:grid;place-items:center;position:relative;color:#bc8b20}
@@ -151,13 +126,12 @@ tr td:first-child{border-radius:8px 0 0 8px}tr td:last-child{border-radius:0 8px
 .leaderboard .footnote{text-align:center}
 .leader-page{max-width:800px;margin:auto}
 
-/* Photo Modal Dialog */
-.photo-modal-backdrop{position:fixed;inset:0;background:rgba(0,16,39,0.65);backdrop-filter:blur(4px);display:grid;place-items:center;z-index:100;padding:20px}
-.photo-modal-dialog{background:var(--surface);border:1px solid var(--border);border-radius:18px;max-width:520px;width:100%;padding:24px;box-shadow:0 12px 40px rgba(0,0,0,0.3);animation:modalIn .2s ease-out}
-@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
-.photo-modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
-.photo-modal-header h3{font-size:18px;font-weight:800;color:var(--text)}
-.photo-modal-close{width:32px;height:32px;display:grid;place-items:center;background:var(--soft);border:0;color:var(--muted);border-radius:50%}
+/* Profile Grid */
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:30px}
+.profile dl{margin:15px 0}
+.profile dl>div{display:grid;grid-template-columns:130px 1fr;gap:15px;padding:15px 0;border-bottom:1px solid var(--border);font-size:13px}
+.profile dt{color:var(--muted)}
+.profile dd{margin:0;overflow-wrap:anywhere}
 
 /* Footer & Controls */
 .page-footer{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:11px;padding:28px 0 10px}
@@ -228,11 +202,8 @@ body{background:var(--bg);color:var(--text)}
  .mobile-menu,.mobile-close{display:grid;place-items:center;width:38px;height:38px;background:var(--soft)}
  .mobile-close{position:absolute;right:8px;top:6px;background:#173a63;color:#fff;border:0;width:28px;height:28px;border-radius:50%}
  .topbar{padding:12px 16px;flex-wrap:wrap;gap:12px}
- .header-right-block{display:none}
- .arena-subbar{padding:12px 16px;flex-direction:column;align-items:flex-start;gap:6px}
+ .header-welcome-text{display:none}
  .main-content{padding:16px 14px}
- .daily-quest-card{grid-template-columns:1fr;gap:16px}
- .daily-quest-art{display:none}
  .page-footer{flex-direction:column}
  .arena-shell{grid-template-columns:1fr;min-height:0}
  .arena-showcase{min-height:300px}
