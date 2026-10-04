@@ -1,5 +1,5 @@
 import {useEffect,useState} from 'react';
-import {Home,Gamepad2,BarChart3,Trophy,BookOpen,UserRound,LogOut,Sun,Moon,GraduationCap,School,Users,FileText,Clock,Flame,Zap,Lock,Menu,X,Medal,Calendar} from 'lucide-react';
+import {Home,Gamepad2,BarChart3,Trophy,BookOpen,UserRound,LogOut,Sun,Moon,GraduationCap,School,Users,FileText,Clock,Flame,Zap,Lock,Menu,X,Medal,Calendar,Sparkles} from 'lucide-react';
 import Login from './Login';
 import PhotoEditor,{Avatar} from './Photo';
 import {clearPreview,restorePreview,loginConfigured,parseStudent,request,type Student} from './auth';
@@ -23,8 +23,61 @@ function Brand({dark=false}:{dark?:boolean}){
  return <div className="brand"><img src={'/assets/mga-logo-mark'+(dark?'-dark':'')+'.png'} alt=""/><img className="wordmark" src={'/assets/mga-wordmark-slogan'+(dark?'-dark':'')+'.png'} alt="Maths Genius Academy — Think Smart, Solve Fast, Be a Genius"/></div>;
 }
 
+function CircularRing({percent,color,size=62,stroke=5}:{percent:number;color:string;size?:number;stroke?:number}){
+ const radius=(size-stroke)/2;
+ const circumference=2*Math.PI*radius;
+ const offset=circumference-(Math.min(100,Math.max(0,percent))/100)*circumference;
+ return (
+  <svg width={size} height={size} className="progress-ring">
+   <circle stroke="var(--soft)" strokeWidth={stroke} fill="transparent" r={radius} cx={size/2} cy={size/2}/>
+   <circle
+    stroke={color}
+    strokeWidth={stroke}
+    strokeDasharray={circumference}
+    strokeDashoffset={offset}
+    strokeLinecap="round"
+    fill="transparent"
+    r={radius}
+    cx={size/2}
+    cy={size/2}
+    style={{transform:'rotate(-90deg)',transformOrigin:'50% 50%',transition:'stroke-dashoffset 0.6s ease'}}
+   />
+  </svg>
+ );
+}
+
 function Academic({student:s}:{student:Student}){
- return <section className="panel"><div className="section-title"><h2><BookOpen/> Academic Journey</h2><span>Every small step counts.</span></div><div className="stats">{[[GraduationCap,'Credits',s.credits],[Users,'Attendance',s.attendance+'%'],[BarChart3,'Participation',s.participation+'/5'],[FileText,'Assignments',s.assignments+'%']].map(([Icon,label,value])=>{const Symbol=Icon as typeof Trophy;return <article className="stat" key={String(label)}><Symbol/><div><span>{String(label)}</span><strong>{String(value)}</strong></div></article>})}</div></section>;
+ const cards=[
+  {label:'Attendance',value:`${s.attendance}%`,percent:s.attendance,color:'#0284c7',icon:Users,sub:'Class Presence'},
+  {label:'Assignments',value:`${s.assignments}%`,percent:s.assignments,color:'#8b5cf6',icon:FileText,sub:'Completed Work'},
+  {label:'Participation',value:`${s.participation}/5`,percent:(s.participation/5)*100,color:'#f59e0b',icon:BarChart3,sub:'Class Activity'},
+  {label:'Credits',value:`${s.credits}`,percent:Math.min(100,s.credits),color:'#10b981',icon:GraduationCap,sub:'Earned Points'},
+ ];
+
+ return <section className="panel academic-panel">
+  <div className="section-title">
+   <h2><BookOpen/> Academic Journey</h2>
+   <span>Every small step counts.</span>
+  </div>
+  <div className="academic-grid">
+   {cards.map(c=>{
+    const Icon=c.icon;
+    return (
+     <article className="academic-card" key={c.label}>
+      <div className="academic-ring-wrap">
+       <CircularRing percent={c.percent} color={c.color} size={62} stroke={5}/>
+       <span className="academic-ring-icon" style={{color:c.color}}><Icon size={18}/></span>
+      </div>
+      <div className="academic-card-text">
+       <span className="academic-label">{c.label}</span>
+       <strong className="academic-value" style={{color:c.color}}>{c.value}</strong>
+       <small className="academic-sub">{c.sub}</small>
+      </div>
+     </article>
+    );
+   })}
+  </div>
+ </section>;
 }
 
 function Stats(){
@@ -32,7 +85,43 @@ function Stats(){
 }
 
 function Games(){
- return <section className="panel"><div className="section-title"><h2><Gamepad2/> Play on Web</h2><span>Fun games. Sharper minds.</span></div><div className="game-grid"><article className="game flash"><div><h3>Flash Game</h3><p>Sharpen your mental maths.<br/>Play in your browser.</p><Soon/></div><Zap className="game-art" aria-hidden="true"/></article><article className="game abacus"><div><h3>Abacus Game</h3><p>Build focus and number sense.<br/>Play in your browser.</p><Soon/></div><div className="abacus-art" aria-hidden="true">{[0,1,2,3].map(i=><div key={i}>{[0,1,2].map(j=><i key={j}/>)}</div>)}</div></article></div></section>;
+ return <section className="panel games-panel">
+  <div className="section-title">
+   <h2><Gamepad2/> Play on Web</h2>
+   <span>Fun games. Sharper minds.</span>
+  </div>
+  <div className="game-grid">
+   <article className="game flash-card">
+    <div className="game-info">
+     <span className="game-tag flash-tag"><Zap size={13}/> Mental Speed</span>
+     <h3>Flash Game</h3>
+     <p>Sharpen your mental maths with fast-paced numbers.<br/>Play in your browser.</p>
+     <div className="game-action-row">
+      <button type="button" className="game-play-btn flash-btn">Play Now →</button>
+      <Soon/>
+     </div>
+    </div>
+    <div className="game-visual">
+     <img src="/assets/flash-math-icon.jpg" alt="Flash Math Game" />
+    </div>
+   </article>
+
+   <article className="game abacus-card">
+    <div className="game-info">
+     <span className="game-tag abacus-tag"><Sparkles size={13}/> Focus Master</span>
+     <h3>Abacus Game</h3>
+     <p>Build focus and number sense with interactive beads.<br/>Play in your browser.</p>
+     <div className="game-action-row">
+      <button type="button" className="game-play-btn abacus-btn">Play Now →</button>
+      <Soon/>
+     </div>
+    </div>
+    <div className="game-visual">
+     <img src="/assets/abacus-3d-icon.jpg" alt="Abacus Master Game" />
+    </div>
+   </article>
+  </div>
+ </section>;
 }
 
 function Learning(){
@@ -112,6 +201,7 @@ export default function App(){
  if(!student)return <><header className="login-header arena-login-header"><div className="arena-header-inner"><a className="arena-login-brand" href={mainSiteUrl} aria-label="Maths Genius Academy"><Brand dark={theme==='dark'}/></a><div className="arena-login-title" aria-label="Student Arena"><i aria-hidden="true"/><span>Student Arena</span><i aria-hidden="true"/></div><div className="arena-login-actions"><a href={mainSiteUrl}><span aria-hidden="true">←</span> Back to MGA</a><button className="arena-theme-toggle" onClick={()=>setTheme(t=>t==='light'?'dark':'light')} aria-label={'Switch to '+(theme==='light'?'dark':'light')+' mode' }><span aria-hidden="true">{theme==='dark'?'☾':'☀'}</span></button></div></div></header><Login onLogin={s=>{setStudent(s);setPage('Overview')}}/></>;
 
  return <div className="app-shell">
+  <div className="global-ambient-light-beam" aria-hidden="true"/>
   <a href="#arena-main" className="skip-link">Skip to content</a>
   {menu&&<button className="nav-scrim" aria-label="Close navigation" onClick={()=>setMenu(false)}/>}
   
@@ -121,8 +211,6 @@ export default function App(){
     <Brand dark/>
     <button className="mobile-close" aria-label="Close navigation" onClick={()=>setMenu(false)}><X/></button>
    </div>
-   
-   <div className="ambient-light-bar sidebar-divider" aria-hidden="true"/>
 
    <div className="sidebar-arena-title">STUDENT ARENA</div>
 
@@ -172,9 +260,6 @@ export default function App(){
      <p>Keep learning, keep growing.</p>
     </div>
    </header>
-
-   {/* Ambient Light Bar Divider */}
-   <div className="ambient-light-bar" aria-hidden="true"/>
 
    {/* Main Content Area */}
    <main id="arena-main" className="main-content">
